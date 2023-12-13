@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/gateway-service
+permissions:
+  - object: /opt/gateway-service/
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+hooks:
+  ApplicationStop:
+    - location: kill_process.sh
+  ApplicationStart:
+    - location: run_java.sh

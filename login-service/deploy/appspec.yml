@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/login-service
+permissions:
+  - object: /opt/login-service/
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+hooks:
+  ApplicationStop:
+    - location: kill_process.sh
+  ApplicationStart:
+    - location: run_java.sh
