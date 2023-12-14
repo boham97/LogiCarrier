@@ -1,0 +1,184 @@
+version: '1.0'
+
+services:
+  logicarrier-db:
+      container_name: logicarrier-db
+      image: mysql:latest
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+      command: ['--character-set-server=utf8mb4',
+                '--collation-server=utf8mb4_unicode_ci',
+                '--init-file=/docker-entrypoint-initdb.d/init.sql']
+      volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      ports:
+        - 3306:3306
+      restart: unless-stopped
+      networks:
+        my-network:
+          ipv4_address: 172.35.0.10
+
+  discovery-service:
+    container_name: discovery-service
+    image: logicarrier/eureka
+    ports:
+      - 8761:8761
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.2
+
+  gateway-service:
+    container_name: gateway-service
+    image: logicarrier/gateway:1.0.0
+    ports:
+      - 8000:8000
+    environment:
+      eureka_client_serviceUrl_defaultZone: http://discovery-service:8761/eureka/
+    depends_on:
+      - discovery-service
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.3
+        
+  login-service:
+    container_name: login-service
+    image: logicarrier/login-service:1.0.0
+    environment:
+      eureka_client_serviceUrl_defaultZone: http://discovery-service:8761/eureka/
+      spring_datasource_url: jdbc:mysql://logicarrier-db:3306/logiCarrier
+    depends_on:
+      - logicarrier-db
+      - zoo1
+      - kafka1
+      - redis
+      - gateway-service
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.4
+  
+  worker-service:
+    container_name: worker-service
+    image: logicarrier/worker-service:1.0.0
+    environment:
+      eureka_client_serviceUrl_defaultZone: http://discovery-service:8761/eureka/
+      spring_datasource_url: jdbc:mysql://logicarrier-db:3306/picker
+      spring_redis_host: redis
+      spring_kafka_host: kafka1
+      spring_kafka_port: 19092
+    depends_on:
+      - logicarrier-db
+      - zoo1
+      - kafka1
+      - redis
+      - gateway-service
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.5
+
+  order-service:
+    container_name: order-service
+    image: logicarrier/order-service:1.0.0
+    environment:
+      eureka_client_serviceUrl_defaultZone: http://discovery-service:8761/eureka/
+      spring_datasource_url: jdbc:mysql://logicarrier-db:3306/delivery
+      spring_redis_host: redis
+      spring_kafka_host: kafka1
+      spring_kafka_port: 19092
+    depends_on:
+      - logicarrier-db
+      - zoo1
+      - kafka1
+      - redis
+      - gateway-service
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.6
+
+  robot-service:
+    container_name: robot-service
+    image: logicarrier/robot-service:1.0.0
+    environment:
+      eureka_client_serviceUrl_defaultZone: http://discovery-service:8761/eureka/
+      spring_datasource_url: jdbc:mysql://logicarrier-db:3306/robot
+      spring_redis_host: redis
+      spring_kafka_host: kafka1
+      spring_kafka_port: 19092
+    depends_on:
+      - logicarrier-db
+      - zoo1
+      - kafka1
+      - redis
+      - gateway-service
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.7
+
+  zoo1:
+    image: confluentinc/cp-zookeeper:7.3.2
+    hostname: zoo1
+    container_name: zoo1
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_SERVERS: zoo1:2888:3888
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.100
+
+  kafka1:
+    image: confluentinc/cp-kafka:7.3.2
+    hostname: kafka1
+    container_name: kafka1
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+      - "9999:9999"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:19092,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092,DOCKER://host.docker.internal:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_PORT: 9999
+      KAFKA_JMX_HOSTNAME: ${DOCKER_HOST_IP:-127.0.0.1}
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    depends_on:
+      - zoo1
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.101
+
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/data:/data
+      - ./redis/conf/redis.conf:/usr/local/conf/redis.conf
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    restart: always
+    command: redis-server /usr/local/conf/redis.conf
+    networks:
+      my-network:
+        ipv4_address: 172.35.0.102
+
+
+networks:
+  my-network:
+    name: logicarrier-network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.35.0.0/16
+          gateway: 172.35.0.1

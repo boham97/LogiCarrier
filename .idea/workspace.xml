@@ -5,21 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9120a4e3-f965-46e4-82af-bc474087cfeb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/eureka/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/login-service/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/test/java/com/example/orderservice/OrderServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/test/java/com/example/orderservice/OrderServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/robot-service/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot-service/src/main/java/com/example/robotservice/massagequeue/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/robot-service/src/main/java/com/example/robotservice/massagequeue/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot-service/src/main/java/com/example/robotservice/massagequeue/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/robot-service/src/main/java/com/example/robotservice/massagequeue/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/robot-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worker-service/src/main/java/com/example/workerservice/messagequeue/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/worker-service/src/main/java/com/example/workerservice/messagequeue/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worker-service/src/main/java/com/example/workerservice/messagequeue/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/worker-service/src/main/java/com/example/workerservice/messagequeue/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worker-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/worker-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worker-service/src/test/java/com/example/workerservice/PickerServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/worker-service/src/test/java/com/example/workerservice/PickerServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/deploy/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/deploy/appspec.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/deploy/kill_process.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/deploy/run_java.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/src/main/java/com/example/eureka/EurekaApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka/src/test/java/com/example/eureka/EurekaApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
