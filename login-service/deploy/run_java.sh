@@ -1,9 +1,9 @@
 #!/bin/bash
-cd /opt/login
-echo "배포"
+cd /opt/cdtest
 version=$(echo *.jar | grep -oP '\d+\.\d+\.\d+')
-echo $version
-sudo docker build -t login-service:$version .
-echo "build"
-sudo docker run -d -p 8080:8080 --network logicarrier-network --name login-service login-service:$version -e "eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/" -e "spring.datasource.url=jdbc:mysql://mysql:3306/logiCarrier"  logicarrier/login-service:1.0.0
+service=$(echo *.jar | cut -d'-' -f1,2)
+
+sudo docker run -d --name "$service-1" $service:$version
 echo "successfully run!"
+sudo docker stop "$service-2"
+sudo docker rm "$service-2"

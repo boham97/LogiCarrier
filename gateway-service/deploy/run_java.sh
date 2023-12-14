@@ -1,9 +1,9 @@
 #!/bin/bash
-cd /opt/gateway
-echo "배포"
+cd /opt/cdtest
 version=$(echo *.jar | grep -oP '\d+\.\d+\.\d+')
-echo $version
-sudo docker build -t gateway-service:$version .
-echo "build"
-sudo docker run -d -p 8080:8080 --network logicarrier-network --name gateway-service gateway-service:$version
+service=$(echo *.jar | cut -d'-' -f1,2)
+
+sudo docker run -d --name "$service-1" $service:$version
 echo "successfully run!"
+sudo docker stop "$service-2"
+sudo docker rm "$service-2"

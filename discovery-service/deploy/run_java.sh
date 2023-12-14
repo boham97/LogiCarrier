@@ -1,9 +1,9 @@
 #!/bin/bash
-cd /opt/discovery-service
-echo "배포"
+cd /opt/cdtest
 version=$(echo *.jar | grep -oP '\d+\.\d+\.\d+')
-echo $version
-sudo docker build -t discovery-service:$version .
-echo "build"
-sudo docker run -d -p 8761:8761 --network logicarrier-network --name discovery-service discovery-service:$version
+service=$(echo *.jar | cut -d'-' -f1,2)
+
+sudo docker run -d --name "$service-1" $service:$version
 echo "successfully run!"
+sudo docker stop "$service-2"
+sudo docker rm "$service-2"
