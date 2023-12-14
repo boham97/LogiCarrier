@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /opt/cdtest
+    destination: /opt/robot-service
 permissions:
-  - object: /opt/cdtest/
+  - object: /opt/robot-service/
     owner: ubuntu
     group: ubuntu
     mode: 755
