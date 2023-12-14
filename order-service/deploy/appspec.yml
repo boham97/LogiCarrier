@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /opt/cdtest
+    destination: /opt/order-service
 permissions:
-  - object: /opt/cdtest/
+  - object: /opt/order-service/
     owner: ubuntu
     group: ubuntu
     mode: 755
