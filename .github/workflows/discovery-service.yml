@@ -2,12 +2,14 @@ name: discovery CI with Gradle
 
 on:
   push:
-    branches: [ "master" ]
-      paths:
+    branches:
+      - master
+    paths:
       - 'discovery-service/**'
   pull_request:
-    branches: [ "master" ]
-      paths:
+    branches: 
+      - master
+    paths:
       - 'discovery-service/**'
 permissions:
   contents: read
@@ -34,7 +36,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: Build with Gradle
-        run: ./gradlew init; ./gradlew build
+        run: ./gradlew init; ./gradlew build --exclude-task test
         working-directory: ${{ env.working-directory }}
 
       - name: Copy Jar

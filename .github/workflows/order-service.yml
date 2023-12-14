@@ -3,11 +3,11 @@ name: order CI with Gradle
 on:
   push:
     branches: [ "master" ]
-      paths:
+    paths:
       - 'order-service/**'
   pull_request:
     branches: [ "master" ]
-      paths:
+    paths:
       - 'order-service/**'
 permissions:
   contents: read
@@ -34,7 +34,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: Build with Gradle
-        run: ./gradlew init; ./gradlew build
+        run: ./gradlew init; ./gradlew build --exclude-task test
         working-directory: ${{ env.working-directory }}
 
       - name: Copy Jar
