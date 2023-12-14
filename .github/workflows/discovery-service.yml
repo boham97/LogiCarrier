@@ -56,7 +56,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload to S3
-        run: aws s3 cp --region ${{ secrets.AWS_REGION }} .${{ env.working-directory }}/${{ env.service-name }}.zip s3://${{ secrets.S3_BUCKET_NAME }}/${{ env.service-name }}.zip
+        run: aws s3 cp --region ${{ secrets.AWS_REGION }} ${{ env.working-directory }}/${{ env.service-name }}.zip s3://${{ secrets.S3_BUCKET_NAME }}/${{ env.service-name }}.zip
 
       - name: Code Deploy
         run: aws deploy create-deployment 
